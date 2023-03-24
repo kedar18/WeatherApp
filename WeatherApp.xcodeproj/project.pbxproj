@@ -15,6 +15,7 @@
 		9768089029CD8ABC0046222D /* WeatherViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9768088E29CD8ABC0046222D /* WeatherViewCell.swift */; };
 		9768089129CD8ABD0046222D /* WeatherViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9768088F29CD8ABC0046222D /* WeatherViewCell.xib */; };
 		9768089429CD8BD90046222D /* WeatherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9768089329CD8BD90046222D /* WeatherViewController.swift */; };
+		9768089729CD97100046222D /* GeoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9768089629CD97100046222D /* GeoService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		9768088E29CD8ABC0046222D /* WeatherViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherViewCell.swift; sourceTree = "<group>"; };
 		9768088F29CD8ABC0046222D /* WeatherViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WeatherViewCell.xib; sourceTree = "<group>"; };
 		9768089329CD8BD90046222D /* WeatherViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherViewController.swift; sourceTree = "<group>"; };
+		9768089629CD97100046222D /* GeoService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +62,7 @@
 		9768085129CD698B0046222D /* WeatherApp */ = {
 			isa = PBXGroup;
 			children = (
+				9768089529CD96F70046222D /* Service */,
 				9768088D29CD8A920046222D /* View */,
 				9768088629CD7EE10046222D /* Model */,
 				9768085229CD698B0046222D /* AppDelegate.swift */,
@@ -95,6 +98,14 @@
 				9768088F29CD8ABC0046222D /* WeatherViewCell.xib */,
 			);
 			path = Cell;
+			sourceTree = "<group>";
+		};
+		9768089529CD96F70046222D /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				9768089629CD97100046222D /* GeoService.swift */,
+			);
+			path = Service;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -172,6 +183,7 @@
 				9768085329CD698B0046222D /* AppDelegate.swift in Sources */,
 				9768089429CD8BD90046222D /* WeatherViewController.swift in Sources */,
 				9768088829CD7F060046222D /* GeoModel.swift in Sources */,
+				9768089729CD97100046222D /* GeoService.swift in Sources */,
 				9768089029CD8ABC0046222D /* WeatherViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
