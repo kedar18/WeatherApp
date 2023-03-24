@@ -32,6 +32,8 @@ class WeatherViewController: UIViewController {
         filterData = data
         searchBarController.searchBar.delegate = self
         weatherTableView.tableHeaderView = searchBarController.searchBar
+        
+        GeoService.shared.getLocation()
     }
 
 }
