@@ -33,7 +33,7 @@ class WeatherViewController: UIViewController {
         searchBarController.searchBar.delegate = self
         weatherTableView.tableHeaderView = searchBarController.searchBar
         
-        GeoService.shared.getLocation()
+        GeoService.shared.fetchGeoWeather()
     }
 
 }
