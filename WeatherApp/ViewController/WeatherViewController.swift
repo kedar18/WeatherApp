@@ -38,22 +38,25 @@ class WeatherViewController: UIViewController {
     
     private func configureView() {
         searchBarController.searchBar.delegate = self
+        weatherTableView.register(UINib(nibName: "WeatherViewCell", bundle: nil), forCellReuseIdentifier: "cell")
         weatherTableView.tableHeaderView = searchBarController.searchBar
     }
 
 }
 
 extension WeatherViewController: UITableViewDataSource {
-  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return filterData.count
-  }
-  
-  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-      let model = filterData[indexPath.row]
-      cell.textLabel?.text = model.name + "," + model.country
-    return cell
-  }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return filterData.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! WeatherViewCell
+        let model = filterData[indexPath.row]
+        cell.populateCityDetails(model: model)
+        return cell
+    }
+    
 }
 
 extension WeatherViewController: UISearchBarDelegate {

@@ -45,7 +45,7 @@ class GeoService {
     }
     
     func fetchGeoWeatherIcon(icon: String, completion: ((URL) -> Void)?) {
-        AF.download(icon).responseURL { response in
+        AF.download("https://openweathermap.org/img/wn/\(icon)@2x.png").responseURL { response in
             if let data = response.value {
                 completion?(data)
             }

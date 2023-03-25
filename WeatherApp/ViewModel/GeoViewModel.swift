@@ -19,10 +19,8 @@ class GeoViewModel {
         service.fetchLocation(query: searchText, completion: completion)
     }
     
-    func getCityWeather(lat: Float, lon: Float) {
-        service.fetchGeoWeather(lat: lat, lon: lon) { _ in
-            
-        }
+    func getCityWeather(lat: Float, lon: Float, completion: @escaping (GeoWeather) -> Void) {
+        service.fetchGeoWeather(lat: lat, lon: lon,completion: completion )
     }
     
 }
