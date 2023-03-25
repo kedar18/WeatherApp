@@ -20,14 +20,7 @@ class GeoViewModel {
     }
     
     func getCityWeather(lat: Float, lon: Float) {
-        service.fetchGeoWeather(lat: lat, lon: lon) {[weak self] details in
-            let model = self?.displayModel.filter { data in
-                if data.lat == lat {
-                    
-                    return true
-                }
-                return false
-            }
+        service.fetchGeoWeather(lat: lat, lon: lon) { _ in
             
         }
     }
