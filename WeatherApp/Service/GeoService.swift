@@ -10,18 +10,16 @@ import Alamofire
 
 class GeoService {
     
-    static let shared = GeoService()
+    let kAPI = "7a10511986c80700b545ab77ed9c2ca2"
     
-    func fetchLocation() {
+    func fetchLocation(query: String, completion: (([GeoModel]) -> Void)?) {
         
-        AF.request("http://api.openweathermap.org/geo/1.0/direct?q=London&limit=5&appid=7a10511986c80700b545ab77ed9c2ca2").responseDecodable(of: [GeoModel].self)
+        AF.request("http://api.openweathermap.org/geo/1.0/direct?q=\(query)&limit=25&appid=\(kAPI)").responseDecodable(of: [GeoModel].self)
         { response in
             
             switch response.result {
-                
-            case .success(let json):
-                print(json)
-                
+            case .success(let model):
+                completion?(model)
             case .failure(let error):
                 print(error)
             }
@@ -29,16 +27,16 @@ class GeoService {
         
     }
     
-    func fetchGeoWeather() {
+    func fetchGeoWeather(lat: Float, lon: Float, completion: ((GeoWeather) -> Void)?) {
         
-        AF.request("https://api.openweathermap.org/data/2.5/weather?lat=51.515618&lon=-0.091998&appid=7a10511986c80700b545ab77ed9c2ca2").responseDecodable(of: GeoWrapper.self)
+        AF.request("https://api.openweathermap.org/data/2.5/weather?lat=\(lat)&lon=\(lon)&appid=\(kAPI)").responseDecodable(of: [GeoWeather].self)
         { response in
             
             switch response.result {
-                
-            case .success(let json):
-                print(json)
-                
+            case .success(let model):
+                if let unwrapper = model.first {
+                    completion?(unwrapper)
+                }
             case .failure(let error):
                 print(error)
             }
@@ -46,4 +44,11 @@ class GeoService {
         
     }
     
+    func fetchGeoWeatherIcon(icon: String, completion: ((URL) -> Void)?) {
+        AF.download(icon).responseURL { response in
+            if let data = response.value {
+                completion?(data)
+            }
+        }
+    }
 }
