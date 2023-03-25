@@ -20,7 +20,11 @@ class GeoViewModel {
     }
     
     func getCityWeather(lat: Float, lon: Float, completion: @escaping (GeoWeather) -> Void) {
-        service.fetchGeoWeather(lat: lat, lon: lon,completion: completion )
+        service.fetchGeoWeather(lat: lat, lon: lon, completion: completion )
+    }
+    
+    func getGeoWeatherIcon(iconString: String, completion: @escaping (Data) -> Void) {
+        service.fetchGeoWeatherIcon(icon: iconString, completion: completion)
     }
     
 }

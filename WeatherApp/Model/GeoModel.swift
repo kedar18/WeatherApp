@@ -15,6 +15,11 @@ struct GeoModel: Decodable {
     let state: String?
 }
 
+struct GeoWrapper: Decodable {
+    let weather: [GeoWeather]
+}
+
+
 struct GeoWeather: Decodable {
     let main: String
     let description: String

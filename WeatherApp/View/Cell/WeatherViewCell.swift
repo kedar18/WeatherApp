@@ -36,13 +36,21 @@ class WeatherViewCell: UITableViewCell {
     }
     
     func loadWeather(lat: Float, lon: Float) {
-        viewModel.getCityWeather(lat: lat, lon: lon) { model in
-            print(model.main)
+        viewModel.getCityWeather(lat: lat, lon: lon) { [weak self] model in
+            self?.weatherType.text = model.main
+            self?.weatherDescription.text = model.description
+            DispatchQueue.global(qos: .background).asyncAfter(deadline: .now() + 0.5) {
+                self?.loadImage(name: model.icon)
+            }
         }
     }
     
-    private func populateWeather() {
-        
+    private func loadImage(name: String) {
+        viewModel.getGeoWeatherIcon(iconString: name) { [weak self] data in
+            DispatchQueue.main.async {
+                self?.icon.image = UIImage(data: data)
+            }
+        }
     }
     
 }
