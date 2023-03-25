@@ -39,9 +39,7 @@ class WeatherViewCell: UITableViewCell {
         viewModel.getCityWeather(lat: lat, lon: lon) { [weak self] model in
             self?.weatherType.text = model.main
             self?.weatherDescription.text = model.description
-            DispatchQueue.global(qos: .background).asyncAfter(deadline: .now() + 0.5) {
-                self?.loadImage(name: model.icon)
-            }
+            self?.loadImage(name: model.icon)
         }
     }
     

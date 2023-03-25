@@ -8,7 +8,13 @@
 import Foundation
 import Alamofire
 
-class GeoService {
+protocol GeoProtocol {
+    func fetchLocation(query: String, completion: (([GeoModel]) -> Void)?)
+    func fetchGeoWeather(lat: Float, lon: Float, completion: ((GeoWeather) -> Void)?)
+    func fetchGeoWeatherIcon(icon: String, completion: ((Data) -> Void)?)
+}
+
+class GeoService: GeoProtocol {
     
     let kAPI = "7a10511986c80700b545ab77ed9c2ca2"
     
@@ -31,10 +37,8 @@ class GeoService {
         
         AF.request("https://api.openweathermap.org/data/2.5/weather?lat=\(lat)&lon=\(lon)&appid=\(kAPI)").responseDecodable(of: GeoWrapper.self)
         { response in
-            print(lat, "----", lon)
             switch response.result {
             case .success(let model):
-                print(model.weather.first)
                 if let weather = model.weather.first {
                     completion?(weather)
                 }
