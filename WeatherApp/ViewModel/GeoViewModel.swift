@@ -9,7 +9,7 @@ import Foundation
 
 class GeoViewModel {
     
-    let service: GeoServicex`
+    let service: GeoService
     
     init(service: GeoService = .init()) {
         self.service = service
