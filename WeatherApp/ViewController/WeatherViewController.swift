@@ -16,6 +16,7 @@ class WeatherViewController: UIViewController {
         let searchController = UISearchController()
         searchController.searchBar.placeholder = "Enter City Name"
         searchController.searchBar.searchBarStyle = .minimal
+        searchController.searchBar.searchTextField.clearButtonMode = .never
         return searchController
     }()
     
