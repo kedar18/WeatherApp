@@ -13,6 +13,16 @@ class GeoViewModel {
     let service: GeoService
     let autoLoad = UserDefaults.standard
     
+    var loadSearch: String {
+        get {
+            guard let lastKey = autoLoad.value(forKey: Constants.kLastSearch.value) as? String else { return "" }
+            return lastKey
+        }
+        set {
+            autoLoad.setValue(newValue, forKey: Constants.kLastSearch.value)
+        }
+    }
+    
     init(service: GeoService = .init()) {
         self.service = service
     }

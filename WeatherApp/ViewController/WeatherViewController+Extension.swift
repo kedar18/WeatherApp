@@ -23,7 +23,7 @@ extension WeatherViewController {
                 self?.showAlert(message: errorMsg)
                 return
             }
-            self?.viewModel.autoLoad.set(searchText, forKey: Constants.kLastSearch.value)
+            self?.viewModel.loadSearch = searchText
             self?.filterDataForOutput(model: model)
         })
     }

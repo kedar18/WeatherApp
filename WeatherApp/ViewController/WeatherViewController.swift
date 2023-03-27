@@ -52,8 +52,7 @@ class WeatherViewController: UIViewController {
     }
     
     private func loadLastSearch() {
-        guard let lastKey = viewModel.autoLoad.value(forKey: Constants.kLastSearch.value) as? String else { return }
-        loadWeatherDetails(searchText: lastKey)
+        loadWeatherDetails(searchText: viewModel.loadSearch)
     }
     
 }
