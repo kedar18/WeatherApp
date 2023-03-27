@@ -23,8 +23,8 @@ class WeatherViewController: UIViewController {
     
     // managers
     lazy var locationManager: CLLocationManager = {
-       let locationManager = CLLocationManager()
-        locationManager.requestLocation()
+        let locationManager = CLLocationManager()
+        locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
         locationManager.requestWhenInUseAuthorization()
         return locationManager
     }()
@@ -37,6 +37,7 @@ class WeatherViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureView()
+        configureLocationSetup()
         guard let lastKey = viewModel.autoLoad.value(forKey: Constants.kLastSearch.value) as? String else { return }
         loadWeatherDetails(searchText: lastKey)
     }
@@ -50,7 +51,22 @@ class WeatherViewController: UIViewController {
     private func configureLocationSetup() {
         locationManager.delegate = self
     }
-
+    
+    private func fetchCity(from location: CLLocation, completion: @escaping (String?) -> ()) {
+        CLGeocoder().reverseGeocodeLocation(location) { marks, error in
+            completion(marks?.first?.locality)
+        }
+    }
+    
+    private func filterDataForOutput(model: [GeoModel]) {
+        //sort data by US cities first as per requirements
+        self.filterData = model.filter{ $0.country == Constants.kCountryCode.value }
+        self.filterData.append(contentsOf: model.filter{ $0.country != Constants.kCountryCode.value })
+        DispatchQueue.main.async {
+            self.weatherTableView.reloadData()
+        }
+    }
+    
 }
 
 extension WeatherViewController: UITableViewDataSource {
@@ -101,12 +117,7 @@ extension WeatherViewController {
         
         self.viewModel.getGeoLocationDetails(searchText: searchText, completion: { [weak self] model in
             self?.viewModel.autoLoad.set(searchText, forKey: Constants.kLastSearch.value)
-            //sort data by US cities first as per requirements
-            self?.filterData = model.filter{ $0.country == Constants.kCountryCode.value }
-            self?.filterData.append(contentsOf: model.filter{ $0.country != Constants.kCountryCode.value })
-            DispatchQueue.main.async {
-                self?.weatherTableView.reloadData()
-            }
+            self?.filterDataForOutput(model: model)
         })
     }
 }
@@ -116,13 +127,17 @@ extension WeatherViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation])
     {
         if let location = locations.first {
-            let latitude = location.coordinate.latitude
-            let longitude = location.coordinate.longitude
-            
             let status = CLLocationManager.authorizationStatus()
             
             switch status {
             case .authorizedAlways, .authorizedWhenInUse:
+                fetchCity(from: location) { [weak self] city in
+                    let cityName = city ?? ""
+                    self?.viewModel.getGeoLocationDetails(searchText: cityName) { model in
+                        self?.viewModel.autoLoad.set(cityName, forKey: Constants.kLastSearch.value)
+                        self?.filterDataForOutput(model: model)
+                    }
+                }
                 break
             case .notDetermined, .restricted, .denied:
                 break
@@ -130,6 +145,16 @@ extension WeatherViewController: CLLocationManagerDelegate {
                 break
             }
         }
+    }
+    
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        if manager.authorizationStatus == .authorizedWhenInUse {
+            locationManager.requestLocation()
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print(error)
     }
     
 }
