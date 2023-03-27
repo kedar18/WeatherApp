@@ -16,6 +16,9 @@ enum Constants: String {
     case kInputPlaceHolder = "Enter City Name"
     case kCountryCode = "US"
     case kLastSearch = "last_search"
+    case errorTitle = "Error!"
+    case errorMessage = "Please check Internet connection or input value"
+    case cancel = "Cancel"
     
     var value: String {
         return self.rawValue
