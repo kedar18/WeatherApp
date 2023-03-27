@@ -129,10 +129,7 @@
 				9768089529CD96F70046222D /* Service */,
 				9768088D29CD8A920046222D /* View */,
 				9768088629CD7EE10046222D /* Model */,
-				9768085829CD698B0046222D /* Main.storyboard */,
-				9768085B29CD698D0046222D /* Assets.xcassets */,
-				9768085D29CD698D0046222D /* LaunchScreen.storyboard */,
-				9768086029CD698D0046222D /* Info.plist */,
+				9798A4AE29D1B6C7008C5C99 /* Supporting Files */,
 			);
 			path = WeatherApp;
 			sourceTree = "<group>";
@@ -197,6 +194,17 @@
 				9768085229CD698B0046222D /* AppDelegate.swift */,
 			);
 			path = AppDelegate;
+			sourceTree = "<group>";
+		};
+		9798A4AE29D1B6C7008C5C99 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				9768085829CD698B0046222D /* Main.storyboard */,
+				9768085B29CD698D0046222D /* Assets.xcassets */,
+				9768085D29CD698D0046222D /* LaunchScreen.storyboard */,
+				9768086029CD698D0046222D /* Info.plist */,
+			);
+			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		B8E929E26772559AEEA3289E /* Frameworks */ = {
