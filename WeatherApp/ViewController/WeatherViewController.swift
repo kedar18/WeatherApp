@@ -69,6 +69,13 @@ extension WeatherViewController: UITableViewDataSource {
     
 }
 
+extension WeatherViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 95
+    }
+}
+
 extension WeatherViewController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
