@@ -38,8 +38,7 @@ class WeatherViewController: UIViewController {
         super.viewDidLoad()
         configureView()
         configureLocationSetup()
-        guard let lastKey = viewModel.autoLoad.value(forKey: Constants.kLastSearch.value) as? String else { return }
-        loadWeatherDetails(searchText: lastKey)
+        loadLastSearch()
     }
     
     private func configureView() {
@@ -50,6 +49,11 @@ class WeatherViewController: UIViewController {
     
     private func configureLocationSetup() {
         locationManager.delegate = self
+    }
+    
+    private func loadLastSearch() {
+        guard let lastKey = viewModel.autoLoad.value(forKey: Constants.kLastSearch.value) as? String else { return }
+        loadWeatherDetails(searchText: lastKey)
     }
     
 }
