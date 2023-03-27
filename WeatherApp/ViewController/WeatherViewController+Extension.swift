@@ -14,8 +14,6 @@ extension WeatherViewController {
         viewModel.getGeoLocationDetails(searchText: searchText, completion: { [weak self] model in
             guard let model = model, model.count >= 1 else {
                 self?.searchBarController.dismiss(animated: false)
-                let alert = UIAlertController(title: "Error!", message: "Please check Internet connection or input value", preferredStyle: .alert)
-                let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel)
                 let alert = UIAlertController(title: Constants.errorTitle.value, message: Constants.errorMessage.value, preferredStyle: .alert)
                 let cancelAction = UIAlertAction(title: Constants.cancel.value, style: UIAlertAction.Style.cancel)
                 alert.addAction(cancelAction)
