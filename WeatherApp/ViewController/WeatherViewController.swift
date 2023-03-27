@@ -127,22 +127,12 @@ extension WeatherViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation])
     {
         if let location = locations.first {
-            let status = CLLocationManager.authorizationStatus()
-            
-            switch status {
-            case .authorizedAlways, .authorizedWhenInUse:
-                fetchCity(from: location) { [weak self] city in
-                    let cityName = city ?? ""
-                    self?.viewModel.getGeoLocationDetails(searchText: cityName) { model in
-                        self?.viewModel.autoLoad.set(cityName, forKey: Constants.kLastSearch.value)
-                        self?.filterDataForOutput(model: model)
-                    }
+            fetchCity(from: location) { [weak self] city in
+                let cityName = city ?? ""
+                self?.viewModel.getGeoLocationDetails(searchText: cityName) { model in
+                    self?.viewModel.autoLoad.set(cityName, forKey: Constants.kLastSearch.value)
+                    self?.filterDataForOutput(model: model)
                 }
-                break
-            case .notDetermined, .restricted, .denied:
-                break
-            @unknown default:
-                break
             }
         }
     }
