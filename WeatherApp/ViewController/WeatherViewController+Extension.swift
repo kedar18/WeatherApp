@@ -11,15 +11,16 @@ import CoreLocation
 extension WeatherViewController {
     
     func loadWeatherDetails(searchText: String) {
-        viewModel.getGeoLocationDetails(searchText: searchText, completion: { [weak self] model in
+        viewModel.getGeoLocationDetails(searchText: searchText, completion: { [weak self] model, error in
             guard let model = model, model.count >= 1 else {
                 self?.searchBarController.dismiss(animated: false)
-                let alert = UIAlertController(title: "Error!", message: "Please check Internet connection or input value", preferredStyle: .alert)
-                let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel)
-                let alert = UIAlertController(title: Constants.errorTitle.value, message: Constants.errorMessage.value, preferredStyle: .alert)
-                let cancelAction = UIAlertAction(title: Constants.cancel.value, style: UIAlertAction.Style.cancel)
-                alert.addAction(cancelAction)
-                self?.present(alert, animated: true)
+                var errorMsg = ""
+                if let array = error?.errorDescription?.components(separatedBy: ":"), array.count > 1 {
+                    errorMsg = array[1]
+                } else {
+                    errorMsg = Constants.errorMessage.value
+                }
+                self?.showAlert(message: errorMsg)
                 return
             }
             self?.viewModel.autoLoad.set(searchText, forKey: Constants.kLastSearch.value)
@@ -40,5 +41,12 @@ extension WeatherViewController {
         CLGeocoder().reverseGeocodeLocation(location) { marks, error in
             completion(marks?.first?.locality)
         }
+    }
+    
+    func showAlert(message: String) {
+        let alert = UIAlertController(title: Constants.errorTitle.value, message: message, preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: Constants.cancel.value, style: UIAlertAction.Style.cancel)
+        alert.addAction(cancelAction)
+        self.present(alert, animated: true)
     }
 }

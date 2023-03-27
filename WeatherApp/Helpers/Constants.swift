@@ -19,6 +19,7 @@ enum Constants: String {
     case errorTitle = "Error!"
     case errorMessage = "Please check Internet connection or input value"
     case cancel = "Cancel"
+    case locationError = "Please Check Location permission!"
     
     var value: String {
         return self.rawValue

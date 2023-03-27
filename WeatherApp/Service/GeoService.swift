@@ -18,7 +18,7 @@ class GeoService {
     
     let kAPI = Constants.kAPIKey.value
     
-    func fetchLocation(query: String, completion: (([GeoModel]?) -> Void)?) {
+    func fetchLocation(query: String, completion: (([GeoModel]?, AFError?) -> Void)?) {
         
         let encodeQuery = query.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? ""
         AF.request("\(Constants.kBaseUrl.value)/geo/1.0/direct?q=\(encodeQuery)&limit=25&appid=\(kAPI)").responseDecodable(of: [GeoModel].self)
@@ -26,10 +26,10 @@ class GeoService {
                 
             switch response.result {
             case .success(let model):
-                completion?(model)
+                completion?(model, nil)
             case .failure(let error):
-                print(error)
-                completion?(nil)
+                print(error.errorDescription)
+                completion?(nil, error)
             }
         }
         

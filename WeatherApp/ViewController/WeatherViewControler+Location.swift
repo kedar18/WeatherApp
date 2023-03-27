@@ -15,7 +15,7 @@ extension WeatherViewController: CLLocationManagerDelegate {
         if let location = locations.first {
             fetchCity(from: location) { [weak self] city in
                 let cityName = city ?? ""
-                self?.viewModel.getGeoLocationDetails(searchText: cityName) { model in
+                self?.viewModel.getGeoLocationDetails(searchText: cityName) { model, error in
                     self?.viewModel.autoLoad.set(cityName, forKey: Constants.kLastSearch.value)
                     self?.filterDataForOutput(model: model ?? [])
                 }
@@ -26,11 +26,13 @@ extension WeatherViewController: CLLocationManagerDelegate {
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         if manager.authorizationStatus == .authorizedWhenInUse {
             locationManager.requestLocation()
+        } else if manager.authorizationStatus == .denied {
+            showAlert(message: Constants.locationError.value)
         }
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print(error)
+        showAlert(message: Constants.locationError.value)
     }
     
 }

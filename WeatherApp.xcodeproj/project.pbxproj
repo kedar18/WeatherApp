@@ -129,6 +129,7 @@
 				9768089529CD96F70046222D /* Service */,
 				9768088D29CD8A920046222D /* View */,
 				9768088629CD7EE10046222D /* Model */,
+				9798A4AF29D1EE07008C5C99 /* Helpers */,
 				9798A4AE29D1B6C7008C5C99 /* Supporting Files */,
 			);
 			path = WeatherApp;
@@ -138,7 +139,6 @@
 			isa = PBXGroup;
 			children = (
 				9768088729CD7F060046222D /* GeoModel.swift */,
-				9798A4A229D1704B008C5C99 /* Constants.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -205,6 +205,14 @@
 				9768086029CD698D0046222D /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		9798A4AF29D1EE07008C5C99 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				9798A4A229D1704B008C5C99 /* Constants.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 		B8E929E26772559AEEA3289E /* Frameworks */ = {
