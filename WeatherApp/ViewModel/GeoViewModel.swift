@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Alamofire
 
 class GeoViewModel {
     
@@ -16,7 +17,7 @@ class GeoViewModel {
         self.service = service
     }
     
-    func getGeoLocationDetails(searchText: String, completion: @escaping ([GeoModel]?) -> Void) {
+    func getGeoLocationDetails(searchText: String, completion: @escaping ([GeoModel]?, AFError?) -> Void) {
         service.fetchLocation(query: searchText, completion: completion)
     }
     
