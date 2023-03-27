@@ -28,6 +28,8 @@ class WeatherViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureView()
+        guard let lastKey = viewModel.autoLoad.value(forKey: viewModel.kLastSearch) as? String else { return }
+        loadWeatherDetails(searchText: lastKey)
     }
     
     private func configureView() {
@@ -61,14 +63,7 @@ extension WeatherViewController: UISearchBarDelegate {
         self.searchTask?.cancel()
         guard !searchText.isEmpty else { return }
         let task = DispatchWorkItem { [weak self] in
-            self?.viewModel.getGeoLocationDetails(searchText: searchText, completion: { model in
-                //sort data by US cities first as per requirements
-                self?.filterData = model.filter{ $0.country == "US" }
-                self?.filterData.append(contentsOf: model.filter{ $0.country != "US" })
-                DispatchQueue.main.async {
-                    self?.weatherTableView.reloadData()
-                }
-            })
+            self?.loadWeatherDetails(searchText: searchText)
         }
         searchTask = task
         DispatchQueue.global().asyncAfter(deadline: .now() + 0.75, execute: task)
@@ -77,5 +72,21 @@ extension WeatherViewController: UISearchBarDelegate {
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchTask?.cancel()
         weatherTableView.reloadData()
+    }
+}
+
+extension WeatherViewController {
+    
+    func loadWeatherDetails(searchText: String) {
+        
+        self.viewModel.getGeoLocationDetails(searchText: searchText, completion: { [weak self] model in
+            self?.viewModel.autoLoad.set(searchText, forKey: self?.viewModel.kLastSearch ?? "")
+            //sort data by US cities first as per requirements
+            self?.filterData = model.filter{ $0.country == "US" }
+            self?.filterData.append(contentsOf: model.filter{ $0.country != "US" })
+            DispatchQueue.main.async {
+                self?.weatherTableView.reloadData()
+            }
+        })
     }
 }
