@@ -16,7 +16,7 @@ class GeoViewModel {
         self.service = service
     }
     
-    func getGeoLocationDetails(searchText: String, completion: @escaping ([GeoModel]) -> Void) {
+    func getGeoLocationDetails(searchText: String, completion: @escaping ([GeoModel]?) -> Void) {
         service.fetchLocation(query: searchText, completion: completion)
     }
     

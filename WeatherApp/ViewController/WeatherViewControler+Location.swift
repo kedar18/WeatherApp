@@ -17,7 +17,7 @@ extension WeatherViewController: CLLocationManagerDelegate {
                 let cityName = city ?? ""
                 self?.viewModel.getGeoLocationDetails(searchText: cityName) { model in
                     self?.viewModel.autoLoad.set(cityName, forKey: Constants.kLastSearch.value)
-                    self?.filterDataForOutput(model: model)
+                    self?.filterDataForOutput(model: model ?? [])
                 }
             }
         }

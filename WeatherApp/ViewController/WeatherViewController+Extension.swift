@@ -12,6 +12,14 @@ extension WeatherViewController {
     
     func loadWeatherDetails(searchText: String) {
         viewModel.getGeoLocationDetails(searchText: searchText, completion: { [weak self] model in
+            guard let model = model, model.count >= 1 else {
+                self?.searchBarController.dismiss(animated: false)
+                let alert = UIAlertController(title: "Error!", message: "Please check Internet connection or input value", preferredStyle: .alert)
+                let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel)
+                alert.addAction(cancelAction)
+                self?.present(alert, animated: true)
+                return
+            }
             self?.viewModel.autoLoad.set(searchText, forKey: Constants.kLastSearch.value)
             self?.filterDataForOutput(model: model)
         })
