@@ -9,12 +9,12 @@ import Foundation
 import Alamofire
 
 protocol GeoProtocol {
-    func fetchLocation(query: String, completion: (([GeoModel]?) -> Void)?)
+    func fetchLocation(query: String, completion: (([GeoModel]?, AFError?) -> Void)?)
     func fetchGeoWeather(lat: Float, lon: Float, completion: ((GeoWeather) -> Void)?)
     func fetchGeoWeatherIcon(icon: String, completion: ((Data) -> Void)?)
 }
 
-class GeoService {
+class GeoService: GeoProtocol {
     
     let kAPI = Constants.kAPIKey.value
     
@@ -28,7 +28,7 @@ class GeoService {
             case .success(let model):
                 completion?(model, nil)
             case .failure(let error):
-                print(error.errorDescription)
+                print(error.errorDescription ?? "")
                 completion?(nil, error)
             }
         }
