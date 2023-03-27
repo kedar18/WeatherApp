@@ -2,12 +2,15 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>We’ll use this to to display weather data for you.</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
+		<key>Privacy - Location When In Use Usage Description</key>
+		<dict>
+			<key>We’ll use this to to display weather data for you.</key>
+			<string></string>
+		</dict>
 	</dict>
 </dict>
 </plist>
