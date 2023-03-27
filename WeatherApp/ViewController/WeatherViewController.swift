@@ -13,7 +13,7 @@ class WeatherViewController: UIViewController {
     @IBOutlet weak var weatherTableView: UITableView!
     
     // Utility View
-    private var searchBarController: UISearchController = {
+    private lazy var searchBarController: UISearchController = {
         let searchController = UISearchController()
         searchController.searchBar.placeholder = Constants.kInputPlaceHolder.value
         searchController.searchBar.searchBarStyle = .minimal
