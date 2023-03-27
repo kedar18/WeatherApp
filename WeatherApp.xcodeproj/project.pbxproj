@@ -20,6 +20,7 @@
 		9768089429CD8BD90046222D /* WeatherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9768089329CD8BD90046222D /* WeatherViewController.swift */; };
 		9768089729CD97100046222D /* GeoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9768089629CD97100046222D /* GeoService.swift */; };
 		9768089A29CDE23E0046222D /* GeoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9768089929CDE23E0046222D /* GeoViewModel.swift */; };
+		9798A4A329D1704B008C5C99 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9798A4A229D1704B008C5C99 /* Constants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,7 @@
 		9768089329CD8BD90046222D /* WeatherViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherViewController.swift; sourceTree = "<group>"; };
 		9768089629CD97100046222D /* GeoService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoService.swift; sourceTree = "<group>"; };
 		9768089929CDE23E0046222D /* GeoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoViewModel.swift; sourceTree = "<group>"; };
+		9798A4A229D1704B008C5C99 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,6 +133,7 @@
 			isa = PBXGroup;
 			children = (
 				9768088729CD7F060046222D /* GeoModel.swift */,
+				9798A4A229D1704B008C5C99 /* Constants.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -343,6 +346,7 @@
 				9768089429CD8BD90046222D /* WeatherViewController.swift in Sources */,
 				9768089A29CDE23E0046222D /* GeoViewModel.swift in Sources */,
 				9768088829CD7F060046222D /* GeoModel.swift in Sources */,
+				9798A4A329D1704B008C5C99 /* Constants.swift in Sources */,
 				9768089729CD97100046222D /* GeoService.swift in Sources */,
 				9768089029CD8ABC0046222D /* WeatherViewCell.swift in Sources */,
 			);
