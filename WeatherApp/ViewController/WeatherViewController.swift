@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreLocation
 
 class WeatherViewController: UIViewController {
     // Outlets
@@ -14,10 +15,18 @@ class WeatherViewController: UIViewController {
     // Utility View
     private var searchBarController: UISearchController = {
         let searchController = UISearchController()
-        searchController.searchBar.placeholder = "Enter City Name"
+        searchController.searchBar.placeholder = Constants.kInputPlaceHolder.value
         searchController.searchBar.searchBarStyle = .minimal
         searchController.searchBar.searchTextField.clearButtonMode = .never
         return searchController
+    }()
+    
+    // managers
+    lazy var locationManager: CLLocationManager = {
+       let locationManager = CLLocationManager()
+        locationManager.requestLocation()
+        locationManager.requestWhenInUseAuthorization()
+        return locationManager
     }()
     
     // Variables
@@ -28,14 +37,18 @@ class WeatherViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureView()
-        guard let lastKey = viewModel.autoLoad.value(forKey: viewModel.kLastSearch) as? String else { return }
+        guard let lastKey = viewModel.autoLoad.value(forKey: Constants.kLastSearch.value) as? String else { return }
         loadWeatherDetails(searchText: lastKey)
     }
     
     private func configureView() {
         searchBarController.searchBar.delegate = self
-        weatherTableView.register(UINib(nibName: "WeatherViewCell", bundle: nil), forCellReuseIdentifier: "cell")
+        weatherTableView.register(UINib(nibName: Constants.kCellNibName.value, bundle: nil), forCellReuseIdentifier: Constants.kCellIdentifier.value)
         weatherTableView.tableHeaderView = searchBarController.searchBar
+    }
+    
+    private func configureLocationSetup() {
+        locationManager.delegate = self
     }
 
 }
@@ -47,7 +60,7 @@ extension WeatherViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! WeatherViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.kCellIdentifier.value, for: indexPath) as! WeatherViewCell
         let model = filterData[indexPath.row]
         cell.populateCityDetails(model: model)
         cell.loadWeather(lat: model.lat, lon: model.lon)
@@ -80,13 +93,36 @@ extension WeatherViewController {
     func loadWeatherDetails(searchText: String) {
         
         self.viewModel.getGeoLocationDetails(searchText: searchText, completion: { [weak self] model in
-            self?.viewModel.autoLoad.set(searchText, forKey: self?.viewModel.kLastSearch ?? "")
+            self?.viewModel.autoLoad.set(searchText, forKey: Constants.kLastSearch.value)
             //sort data by US cities first as per requirements
-            self?.filterData = model.filter{ $0.country == "US" }
-            self?.filterData.append(contentsOf: model.filter{ $0.country != "US" })
+            self?.filterData = model.filter{ $0.country == Constants.kCountryCode.value }
+            self?.filterData.append(contentsOf: model.filter{ $0.country != Constants.kCountryCode.value })
             DispatchQueue.main.async {
                 self?.weatherTableView.reloadData()
             }
         })
     }
+}
+
+extension WeatherViewController: CLLocationManagerDelegate {
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation])
+    {
+        if let location = locations.first {
+            let latitude = location.coordinate.latitude
+            let longitude = location.coordinate.longitude
+            
+            let status = CLLocationManager.authorizationStatus()
+            
+            switch status {
+            case .authorizedAlways, .authorizedWhenInUse:
+                break
+            case .notDetermined, .restricted, .denied:
+                break
+            @unknown default:
+                break
+            }
+        }
+    }
+    
 }

@@ -16,11 +16,12 @@ protocol GeoProtocol {
 
 class GeoService: GeoProtocol {
     
-    let kAPI = "7a10511986c80700b545ab77ed9c2ca2"
+    let kAPI = Constants.kAPIKey.value
     
     func fetchLocation(query: String, completion: (([GeoModel]) -> Void)?) {
         
-        AF.request("http://api.openweathermap.org/geo/1.0/direct?q=\(query)&limit=25&appid=\(kAPI)").responseDecodable(of: [GeoModel].self)
+        let encodeQuery = query.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? ""
+        AF.request("\(Constants.kBaseUrl.value)/geo/1.0/direct?q=\(encodeQuery)&limit=25&appid=\(kAPI)").responseDecodable(of: [GeoModel].self)
         { response in
             
             switch response.result {
@@ -35,7 +36,7 @@ class GeoService: GeoProtocol {
     
     func fetchGeoWeather(lat: Float, lon: Float, completion: ((GeoWeather) -> Void)?) {
         
-        AF.request("https://api.openweathermap.org/data/2.5/weather?lat=\(lat)&lon=\(lon)&appid=\(kAPI)").responseDecodable(of: GeoWrapper.self)
+        AF.request("\(Constants.kBaseUrl.value)/data/2.5/weather?lat=\(lat)&lon=\(lon)&appid=\(kAPI)").responseDecodable(of: GeoWrapper.self)
         { response in
             switch response.result {
             case .success(let model):
@@ -50,7 +51,7 @@ class GeoService: GeoProtocol {
     }
     
     func fetchGeoWeatherIcon(icon: String, completion: ((Data) -> Void)?) {
-        AF.download("https://openweathermap.org/img/wn/\(icon)@2x.png").responseData { response in
+        AF.download("\(Constants.kImageBaseUrl.value)/\(icon)@2x.png").responseData { response in
             if let data = response.value {
                 completion?(data)
             }

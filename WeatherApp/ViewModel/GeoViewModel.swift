@@ -10,7 +10,6 @@ import Foundation
 class GeoViewModel {
     
     let service: GeoService
-    let kLastSearch = "last_search"
     let autoLoad = UserDefaults.standard
     
     init(service: GeoService = .init()) {
